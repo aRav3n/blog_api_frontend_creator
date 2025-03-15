@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Footer from "./Footer";
+import Login from "./Login";
 
 const apiUrl = import.meta.env.VITE_API_ADDRESS;
 
@@ -20,27 +21,11 @@ async function getJsonData() {
 
 function App() {
   const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const jsonData = (async () => {
-      getJsonData();
-    })();
-  }, [user]);
-
-  const CreatePost = () => {
-    return <></>;
-  };
-  const Header = () => {
-    return <></>;
-  };
-  const Login = () => {
-    return <></>;
-  };
+  const [jwt, setJwt] = useState(null);
 
   return (
     <>
-      <Header />
-      {user ? <CreatePost /> : <Login />}
+      {user ? <MainPage /> : <Login setUser={setUser} setJwt={setJwt} apiUrl={apiUrl} />}
       <Footer />
     </>
   );
