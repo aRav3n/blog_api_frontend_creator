@@ -1,9 +1,13 @@
 import { useState } from "react";
 
-function App({ getJsonResponse, setWriteNewPost }) {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
+function App({
+  getJsonResponse,
+  setWriteNewPost,
+  title,
+  setTitle,
+  content,
+  setContent,
+}) {
   async function saveDraft() {
     const urlExtension = "post";
     const method = "POST";
@@ -27,6 +31,12 @@ function App({ getJsonResponse, setWriteNewPost }) {
     };
 
     await getJsonResponse(urlExtension, method, bodyObject);
+    setWriteNewPost(false);
+  }
+
+  function cancelEdit() {
+    setTitle("");
+    setContent("");
     setWriteNewPost(false);
   }
 
@@ -63,6 +73,9 @@ function App({ getJsonResponse, setWriteNewPost }) {
           </button>
           <button type="button" onClick={publishPost}>
             Publish post
+          </button>
+          <button type="button" onClick={cancelEdit}>
+            Exit without saving
           </button>
         </fieldset>
       </form>

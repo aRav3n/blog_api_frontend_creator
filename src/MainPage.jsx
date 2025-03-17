@@ -1,9 +1,11 @@
 import { useState } from "react";
-import WriteNewPost from "./WriteNewPost";
+import WritePost from "./WritePost";
 
 function App({ user, getJsonResponse }) {
   const [writeNewPost, setWriteNewPost] = useState(false);
   const [editPost, setEditPost] = useState(false);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   function ActionSelectionButtons() {
     if (!writeNewPost && !editPost) {
@@ -34,9 +36,13 @@ function App({ user, getJsonResponse }) {
   function AuthorPage() {
     if (writeNewPost) {
       return (
-        <WriteNewPost
+        <WritePost
           getJsonResponse={getJsonResponse}
           setWriteNewPost={setWriteNewPost}
+          title={title}
+          setTitle={setTitle}
+          content={content}
+          setContent={setContent}
         />
       );
     }
