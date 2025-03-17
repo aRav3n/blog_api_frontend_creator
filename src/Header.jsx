@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 
-function App({ user, loggedIn, logOut, signUp, setSignUp }) {
+function App({
+  user,
+  logOut,
+  pageToDisplay,
+  displaySignupPage,
+  displayLoginPage,
+}) {
   let displayName;
   if (user) {
     if (user.name) {
@@ -12,40 +18,40 @@ function App({ user, loggedIn, logOut, signUp, setSignUp }) {
     displayName = "Anonymous User";
   }
 
-  function Button() {
-    if (loggedIn) {
-      return (
-        <button
-          type="button"
-          onClick={() => {
-            logOut();
-          }}
-        >
+  function SignedInButtons() {
+    return (
+      <>
+        <button type="button">Manage</button>
+        <button type="button" onClick={logOut}>
           Log Out
         </button>
-      );
-    } else if (signUp) {
-      return (
-        <button
-          type="button"
-          onClick={() => {
-            setSignUp(false);
-          }}
-        >
-          Log In
-        </button>
-      );
-    }
+      </>
+    );
+  }
+
+  function LoginButton() {
     return (
-      <button
-        type="button"
-        onClick={() => {
-          setSignUp(true);
-        }}
-      >
+      <button type="button" onClick={displayLoginPage}>
+        Log In
+      </button>
+    );
+  }
+
+  function SignUpButton() {
+    return (
+      <button type="button" onClick={displaySignupPage}>
         Sign Up
       </button>
     );
+  }
+
+  function Button() {
+    if (pageToDisplay === "signup") {
+      return <LoginButton />;
+    } else if (pageToDisplay === "login") {
+      return <SignUpButton />;
+    }
+    return <SignedInButtons />;
   }
 
   return (

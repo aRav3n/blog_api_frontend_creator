@@ -30,43 +30,40 @@ function App({
     setFunction(newValue);
   }
 
-  if (!loggedIn && !signUp) {
-    return (
-      <div>
-        <h1>Log in here</h1>
-        <form>
-          <label htmlFor="email">
-            <input
-              type="email"
-              name="email"
-              id="email"
-              onChange={(e) => {
-                handleChange(e, setEmail);
-              }}
-              value={email}
-            />
-            email
-          </label>
-          <label htmlFor="password">
-            <input
-              type="password"
-              name="password"
-              id="password"
-              onChange={(e) => {
-                handleChange(e, setPassword);
-              }}
-              value={password}
-            />
-            password
-          </label>
-          <button type="button" onClick={handleClick}>
-            Sign in
-          </button>
-        </form>
-      </div>
-    );
-  }
-  return <></>;
+  return (
+    <div>
+      <h1>Log in here</h1>
+      <form>
+        <label htmlFor="email">
+          <input
+            type="email"
+            name="email"
+            id="email"
+            onChange={(e) => {
+              handleChange(e, setEmail);
+            }}
+            value={email}
+          />
+          email
+        </label>
+        <label htmlFor="password">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            onChange={(e) => {
+              handleChange(e, setPassword);
+            }}
+            value={password}
+          />
+          password
+        </label>
+        <button type="button" onClick={handleClick}>
+          Sign in
+        </button>
+      </form>
+    </div>
+  );
 }
 
 export default App;

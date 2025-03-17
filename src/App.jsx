@@ -11,14 +11,18 @@ const apiUrl = import.meta.env.VITE_API_ADDRESS;
 async function getJsonResponse(urlExtension, method, bodyObject) {
   const url = `${apiUrl}${urlExtension}`;
   const body = JSON.stringify(bodyObject);
+  const fetchObject = {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  if (method !== "GET") {
+    fetchObject.body = body;
+  }
+
   try {
-    const response = await fetch(url, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body,
-    });
+    const response = await fetch(url, fetchObject);
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
@@ -30,11 +34,37 @@ async function getJsonResponse(urlExtension, method, bodyObject) {
   }
 }
 
+async function wakeUpBackend() {
+  const bodyObject = null;
+  const urlExtension = "user";
+  const method = "GET";
+
+  await getJsonResponse(urlExtension, method, bodyObject);
+}
+
 function App() {
+  useEffect(() => {
+    (async () => {
+      await wakeUpBackend();
+    })();
+  }, []);
+
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [signUp, setSignUp] = useState(false);
+  const [pageToDisplay, setPageToDisplay] = useState("login");
+  const pages = {
+    main: <MainPage user={user} loggedIn={loggedIn} />,
+    login: (
+      <Login
+        setUser={setUser}
+        setToken={setToken}
+        logIn={logIn}
+        getJsonResponse={getJsonResponse}
+      />
+    ),
+    signup: <Signup getJsonResponse={getJsonResponse} />,
+  };
 
   function getStoredUser() {
     let storedUserJson = localStorage.getItem("user");
@@ -55,7 +85,7 @@ function App() {
     setUser(newUser);
     localStorage.setItem("token", newToken);
     localStorage.setItem("user", JSON.stringify(newUser));
-    setLoggedIn(true);
+    setPageToDisplay("main");
   }
 
   function logOut() {
@@ -63,7 +93,23 @@ function App() {
     localStorage.removeItem("user");
     setUser(null);
     setToken(null);
-    setLoggedIn(false);
+    setPageToDisplay("login");
+  }
+
+  function displayLoginPage() {
+    setPageToDisplay("login");
+  }
+
+  function displaySignupPage() {
+    setPageToDisplay("signup");
+  }
+
+  async function deleteAccount(params) {
+    const urlExtension = "";
+    const method = "DELETE";
+    const bodyObject = {};
+    await getJsonResponse(urlExtension, method, bodyObject);
+    setPageToDisplay("signup");
   }
 
   useEffect(() => {
@@ -81,25 +127,12 @@ function App() {
     <>
       <Header
         user={user}
-        loggedIn={loggedIn}
         logOut={logOut}
-        signUp={signUp}
-        setSignUp={setSignUp}
+        pageToDisplay={pageToDisplay}
+        displaySignupPage={displaySignupPage}
+        displayLoginPage={displayLoginPage}
       />
-      <MainPage user={user} loggedIn={loggedIn} />
-      <Login
-        setUser={setUser}
-        setToken={setToken}
-        logIn={logIn}
-        loggedIn={loggedIn}
-        signUp={signUp}
-        getJsonResponse={getJsonResponse}
-      />
-      <Signup
-        signUp={signUp}
-        setSignUp={setSignUp}
-        getJsonResponse={getJsonResponse}
-      />
+      {pages[pageToDisplay]}
       <Footer />
     </>
   );
