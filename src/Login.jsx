@@ -14,8 +14,8 @@ function App({
 
   async function handleClick() {
     const urlExtension = "user/login";
-    const bodyObject = { email, password };
     const method = "POST";
+    const bodyObject = { email, password };
 
     const result = await getJsonResponse(urlExtension, method, bodyObject);
     if (result.token && result.userObject) {

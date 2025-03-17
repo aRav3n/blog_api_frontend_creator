@@ -21,7 +21,7 @@ function App({
   function SignedInButtons() {
     return (
       <>
-        <button type="button">Manage</button>
+        <button type="button">My Account</button>
         <button type="button" onClick={logOut}>
           Log Out
         </button>

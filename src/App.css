@@ -1,14 +1,23 @@
 button {
   border: 1px solid #00000088;
+  margin: 0 auto;
 }
 
 #creatorPassword {
   background-color: #00000022;
 }
 
-footer {
+fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+}
+
+footer,
+header {
+  background-color: #65e09288;
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0.25rem 1rem;
 }
 
 form {
@@ -21,7 +30,6 @@ header {
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
 }
 
 header > div {
@@ -29,10 +37,12 @@ header > div {
   gap: 1vw;
 }
 
-input {
-  border: 1px solid #00000088;
-  border-radius: 0.2rem;
-  padding: 0.15rem;
+input,
+textarea {
+  border: 1px solid #000000;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  resize: none;
 }
 
 label {
@@ -40,6 +50,22 @@ label {
   justify-content: start;
   justify-items: start;
   gap: 0.1rem;
+}
+
+#postEdit {
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  min-height: min(80dvh, 700px);
+  padding: 1vmin;
+}
+
+#postEdit > label[for="content"] {
+  align-items: start;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }
 
 #root {
@@ -55,5 +81,14 @@ label {
 
 #root > div {
   align-content: center;
+  align-items: center;
   display: grid;
+  gap: 2vh;
+  min-width: 95vw;
+}
+
+textarea {
+  flex-grow: 1;
+  min-height: 10vh;
+  width: max(250px, 50vw);
 }
