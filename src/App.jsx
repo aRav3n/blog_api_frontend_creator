@@ -13,7 +13,7 @@ function App() {
   const [token, setToken] = useState(null);
   const [pageToDisplay, setPageToDisplay] = useState("login");
   const pages = {
-    main: <MainPage user={user} getJsonResponse={getJsonResponse} />,
+    main: <MainPage getJsonResponse={getJsonResponse} />,
     login: (
       <Login
         setUser={setUser}
@@ -27,11 +27,11 @@ function App() {
 
   async function getJsonResponse(urlExtension, method, bodyObject) {
     const url = `${apiUrl}${urlExtension}`;
-    const body = JSON.stringify(bodyObject);
     const fetchObject = {
       method,
     };
     if (method !== "GET") {
+      const body = JSON.stringify(bodyObject);
       fetchObject.body = body;
     }
     if (token) {
@@ -44,6 +44,8 @@ function App() {
         "Content-Type": "application/json",
       };
     }
+
+    console.log(fetchObject);
 
     try {
       const response = await fetch(url, fetchObject);
