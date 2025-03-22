@@ -52,6 +52,19 @@ label {
   gap: 0.1rem;
 }
 
+.myPosts {
+  display: grid;
+  gap: 1dvh;
+  justify-content: center;
+  padding: 1dvh 0;
+}
+
+.myPosts > div {
+  border: 1px solid #00000066;
+  padding: 1dvh 1vw;
+  width: min(90vw, 800px);
+}
+
 #postEdit {
   align-items: start;
   display: flex;

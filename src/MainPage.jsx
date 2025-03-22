@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WritePost from "./WritePost";
 import EditPosts from "./EditPosts";
 
@@ -7,6 +7,14 @@ function App({ getJsonResponse }) {
   const [editPost, setEditPost] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [postToEdit, setPostToEdit] = useState(null);
+
+  useEffect(() => {
+    if (postToEdit) {
+      setTitle(postToEdit.title);
+      setContent(postToEdit.content);
+    }
+  }, [postToEdit]);
 
   function ActionSelectionButtons() {
     if (!writePost && !editPost) {
@@ -34,38 +42,27 @@ function App({ getJsonResponse }) {
     return <></>;
   }
 
-  function AuthorPage() {
-    if (writePost) {
-      return (
-        <WritePost
-          getJsonResponse={getJsonResponse}
-          setWritePost={setWritePost}
-          title={title}
-          setTitle={setTitle}
-          content={content}
-          setContent={setContent}
-        />
-      );
-    } else if (editPost) {
-      return (
-        <EditPosts
-          getJsonResponse={getJsonResponse}
-          setEditPost={setEditPost}
-          setWritePost={setWritePost}
-          title={title}
-          setTitle={setTitle}
-          content={content}
-          setContent={setContent}
-        />
-      );
-    }
-    return <></>;
-  }
-
   return (
     <div>
       <ActionSelectionButtons />
-      <AuthorPage />
+      <WritePost
+        getJsonResponse={getJsonResponse}
+        writePost={writePost}
+        setWritePost={setWritePost}
+        title={title}
+        setTitle={setTitle}
+        content={content}
+        setContent={setContent}
+        postToEdit={postToEdit}
+        setPostToEdit={setPostToEdit}
+      />
+      <EditPosts
+        getJsonResponse={getJsonResponse}
+        editPost={editPost}
+        setEditPost={setEditPost}
+        setWritePost={setWritePost}
+        setPostToEdit={setPostToEdit}
+      />
     </div>
   );
 }

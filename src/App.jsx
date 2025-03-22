@@ -45,8 +45,6 @@ function App() {
       };
     }
 
-    console.log(fetchObject);
-
     try {
       const response = await fetch(url, fetchObject);
 
