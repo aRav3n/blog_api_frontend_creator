@@ -12,6 +12,15 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [pageToDisplay, setPageToDisplay] = useState("login");
+
+  function displayLoginPage() {
+    setPageToDisplay("login");
+  }
+
+  function displaySignupPage() {
+    setPageToDisplay("signup");
+  }
+
   const pages = {
     main: <MainPage getJsonResponse={getJsonResponse} />,
     login: (
@@ -22,7 +31,12 @@ function App() {
         getJsonResponse={getJsonResponse}
       />
     ),
-    signup: <Signup getJsonResponse={getJsonResponse} />,
+    signup: (
+      <Signup
+        getJsonResponse={getJsonResponse}
+        displayLoginPage={displayLoginPage}
+      />
+    ),
   };
 
   async function getJsonResponse(urlExtension, method, bodyObject) {
@@ -102,16 +116,8 @@ function App() {
     setPageToDisplay("login");
   }
 
-  function displayLoginPage() {
-    setPageToDisplay("login");
-  }
-
-  function displaySignupPage() {
-    setPageToDisplay("signup");
-  }
-
   async function deleteAccount() {
-    const urlExtension = "";
+    const urlExtension = "user";
     const method = "DELETE";
     const bodyObject = {};
     await getJsonResponse(urlExtension, method, bodyObject);
@@ -137,6 +143,7 @@ function App() {
         pageToDisplay={pageToDisplay}
         displaySignupPage={displaySignupPage}
         displayLoginPage={displayLoginPage}
+        deleteAccount={deleteAccount}
       />
       {pages[pageToDisplay]}
       <Footer />

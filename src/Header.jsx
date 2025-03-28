@@ -6,6 +6,7 @@ function App({
   pageToDisplay,
   displaySignupPage,
   displayLoginPage,
+  deleteAccount,
 }) {
   let displayName;
   if (user) {
@@ -21,7 +22,15 @@ function App({
   function SignedInButtons() {
     return (
       <>
-        <button type="button">My Account</button>
+        <button
+          type="button"
+          onClick={() => {
+            deleteAccount();
+            logOut();
+          }}
+        >
+          Delete Account
+        </button>
         <button type="button" onClick={logOut}>
           Log Out
         </button>

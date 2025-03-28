@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function App({ signUp, setSignUp, getJsonResponse }) {
+function App({ getJsonResponse, displayLoginPage }) {
   const blankUserObject = {
     email: "",
     username: "",
@@ -26,7 +26,7 @@ function App({ signUp, setSignUp, getJsonResponse }) {
 
     const result = await getJsonResponse(urlExtension, method, formData);
     console.log({ result });
-    // setSignUp(false);
+    displayLoginPage();
   }
 
   return (
