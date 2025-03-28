@@ -19,7 +19,6 @@ function App({ getJsonResponse, displayLoginPage }) {
   }
 
   async function submitData() {
-    console.log(formData);
 
     const method = "POST";
     const urlExtension = "user/signup";

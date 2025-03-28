@@ -12,6 +12,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [pageToDisplay, setPageToDisplay] = useState("login");
+  const [wakeupSent, setWakeupSent] = useState(false);
 
   function displayLoginPage() {
     setPageToDisplay("login");
@@ -82,7 +83,10 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      await wakeUpBackend();
+      if (!wakeupSent) {
+        await wakeUpBackend();
+        setWakeupSent(true);
+      }
     })();
   }, []);
 
