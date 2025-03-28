@@ -125,7 +125,6 @@ function App() {
     const method = "DELETE";
     const bodyObject = {};
     await getJsonResponse(urlExtension, method, bodyObject);
-    setPageToDisplay("signup");
   }
 
   useEffect(() => {
